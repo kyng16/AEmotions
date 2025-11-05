@@ -8,7 +8,13 @@ import { OpenAI } from 'openai';
 const app = express();
 // Ensure uploads directory exists (Render ephemeral FS still needs the folder during request lifetime)
 try { fs.mkdirSync('uploads', { recursive: true }); } catch {}
-const upload = multer({ dest: 'uploads/' });
+
+// Preserve original filename (with extension) so OpenAI can infer format correctly
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, 'uploads/'),
+  filename: (_req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
+});
+const upload = multer({ storage });
 
 const PORT = process.env.PORT || 3000;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4.1';
@@ -76,6 +82,7 @@ app.post('/stt', upload.single('file'), async (req, res) => {
   try {
     const language = req.body?.language;
     const transcription = await openai.audio.transcriptions.create({
+      // Ensure the stream path (includes extension) so SDK sends correct filename
       file: fs.createReadStream(file.path),
       model: OPENAI_STT_MODEL,
       ...(language ? { language } : {}),
