@@ -8,7 +8,8 @@ plugins {
 android {
     namespace = "com.example.app_emotions"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // Override to match plugin requirements (audioplayers_android, path_provider_android, record_android)
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
