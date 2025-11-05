@@ -16,10 +16,13 @@ class OpenAIService {
         chatModel = chatModel ?? const String.fromEnvironment('OPENAI_MODEL', defaultValue: 'gpt-4.1'),
         sttModel = sttModel ?? const String.fromEnvironment('OPENAI_STT_MODEL', defaultValue: 'whisper-1'),
         ttsModel = ttsModel ?? const String.fromEnvironment('OPENAI_TTS_MODEL', defaultValue: 'tts-1'),
-        backendUrl = const String.fromEnvironment('BACKEND_URL', defaultValue: '')
-            .isNotEmpty
-            ? const String.fromEnvironment('BACKEND_URL')
-            : (Platform.environment['BACKEND_URL'] ?? '');
+        backendUrl = const String.fromEnvironment(
+                  'BACKEND_URL',
+                  // Default to deployed Render backend; can be overridden via --dart-define
+                  defaultValue: 'https://app-emotions-backend.onrender.com',
+                ).isNotEmpty
+            ? const String.fromEnvironment('BACKEND_URL', defaultValue: 'https://app-emotions-backend.onrender.com')
+            : (Platform.environment['BACKEND_URL'] ?? 'https://app-emotions-backend.onrender.com');
 
   final String apiKey;
   final String chatModel;
