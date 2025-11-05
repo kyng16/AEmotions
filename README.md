@@ -61,6 +61,8 @@ Uwagi:
 W repo dodałem folder `server/` (Express + OpenAI SDK) i plik `render.yaml` do automatycznego wdrożenia serwisu www na Render.
 
 Szybki deploy (GUI):
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/kyng16/AEmotions)
 1. Zaloguj się do https://render.com/ i wybierz New + From repo.
 2. Wskaż to repo. Render odczyta `render.yaml` i zaproponuje serwis „app-emotions-backend”.
 3. Ustaw zmienną środowiskową `OPENAI_API_KEY` (sekcja Environment).
