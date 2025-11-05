@@ -24,6 +24,26 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 app.use(cors({ origin: '*'}));
 app.use(express.json({ limit: '10mb' }));
 
+// Friendly landing page for root path
+app.get('/', (_req, res) => {
+  res.type('html').send(`
+    <html>
+      <head><meta charset="utf-8"><title>App Emotions Backend</title></head>
+      <body style="font-family:system-ui,Segoe UI,Arial,sans-serif;padding:24px;">
+        <h1>App Emotions Backend</h1>
+        <p>Status endpoint: <a href="/health">/health</a></p>
+        <h2>Endpoints</h2>
+        <ul>
+          <li>GET <code>/health</code></li>
+          <li>POST <code>/chat</code> – { messages:[{role,content}], model?, temperature? }</li>
+          <li>POST <code>/stt</code> – multipart: file, language?</li>
+          <li>POST <code>/tts</code> – { text, voice?, format? } → audio/mpeg</li>
+        </ul>
+      </body>
+    </html>
+  `);
+});
+
 app.get('/health', (_req, res) => {
   res.json({ ok: true, model: OPENAI_MODEL });
 });
