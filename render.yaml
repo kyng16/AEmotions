@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: app-emotions-backend
+    env: node
+    plan: free
+    region: frankfurt
+    buildCommand: "cd server && npm ci"
+    startCommand: "cd server && node index.js"
+    autoDeploy: true
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4.1
+      - key: OPENAI_TTS_MODEL
+        value: tts-1
+      - key: OPENAI_STT_MODEL
+        value: whisper-1
