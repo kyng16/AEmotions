@@ -6,6 +6,8 @@ import fs from 'fs';
 import { OpenAI } from 'openai';
 
 const app = express();
+// Ensure uploads directory exists (Render ephemeral FS still needs the folder during request lifetime)
+try { fs.mkdirSync('uploads', { recursive: true }); } catch {}
 const upload = multer({ dest: 'uploads/' });
 
 const PORT = process.env.PORT || 3000;
